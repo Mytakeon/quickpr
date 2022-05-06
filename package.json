@@ -1,0 +1,15 @@
+{
+  "name": "quickpr",
+  "version": "1.0.0",
+  "description": "Quickly open a pull request",
+  "main": "index.js",
+  "keywords": [
+    "git",
+    "github",
+    "azure",
+    "command-line",
+    "cli"
+  ],
+  "author": "https://github.com/Mytakeon",
+  "license": "ISC"
+}
