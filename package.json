@@ -1,8 +1,12 @@
 {
-  "name": "quickpr",
-  "version": "1.0.0",
+  "name": "quickgitpr",
+  "version": "1.0.1",
   "description": "Quickly open a pull request",
-  "main": "index.js",
+  "bin": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mytakeon/quickpr.git"
+  },
   "keywords": [
     "git",
     "github",

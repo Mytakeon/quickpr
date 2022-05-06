@@ -9,11 +9,6 @@ const quickpr = () => {
 
     const commitMessage = process.argv[2];
 
-    // check if git executable exists
-    if (!execSync('git --version').toString().includes('git version')) {
-        exit(1);
-    }
-
     try {
         const hasChanges = execSync('git status -s').toString();
         if (!hasChanges) {
@@ -21,6 +16,7 @@ const quickpr = () => {
             exit(0);
         }
     } catch (error) {
+        // Not a git repository/git executable does not exist
         exit(1);
     }
 
@@ -47,7 +43,7 @@ const quickpr = () => {
     execSync(`git push --set-upstream ${remoteName} ${branchName}`);
 
     const remoteUrl = execSync(`git remote get-url ${remoteName}`).toString().trim();
-    exec(`start ${getPRUrl(remoteUrl, branchName)}`);
+    execSync(`start ${getPRUrl(remoteUrl, branchName)}`);
 }
 
 const getPRUrl = (remoteUrl, sourceBranch) => {
@@ -55,7 +51,6 @@ const getPRUrl = (remoteUrl, sourceBranch) => {
         // take the .git away from the remoteUrl
         return `${remoteUrl.slice(0, -4)}/compare/${sourceBranch}?expand=1`
     } else if (remoteUrl.indexOf('visualstudio.com') > -1) {
-        // git get the default branch
         const targetBranch = execSync(`git rev-parse --abbrev-ref ${remoteName}/HEAD`).toString().split("/")[1].trim();
         console.log(`Using target branch '${targetBranch}'`);
         return `${remoteUrl}/pullrequestcreate?sourceRef=${sourceBranch}&targetRef=${targetBranch}`;
