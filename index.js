@@ -1,7 +1,7 @@
 const { execSync } = require("child_process");
 const { exit } = require("process");
 
-const quickpr = () => {
+const quickGitPr = () => {
     if (process.argv.length !== 3) {
         console.log(`Usage: quickpr '<commit message>'`);
         exit(1);
@@ -55,9 +55,9 @@ const getPRUrl = (remoteUrl, sourceBranch) => {
         console.log(`Using target branch '${targetBranch}'`);
         return `${remoteUrl}/pullrequestcreate?sourceRef=${sourceBranch}&targetRef=${targetBranch}`;
     } else {
-        console.error('Unsupported remote');
+        console.error(`Unsupported remote '${remoteUrl}'. Consider openning an issue to add it: https://github.com/Mytakeon/quickpr/issues/new`);
         exit(1);
     }
 }
 
-quickpr()
+quickGitPr()
