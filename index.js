@@ -23,12 +23,12 @@ const quickGitPr = () => {
     const branchName = `feature/${commitMessage.replace(/\s/g, "-").toLowerCase()}`;
     const remotes = execSync('git remote').toString().split('\n');
     let remoteName;
-    if (remotes.length === 0) {
+    if (remotes.length === 1) {
         console.error('No remotes found');
         exit(1);
     } else if (remotes.length > 2) {
         if (remotes.indexOf('origin') === -1) {
-            console.error('More than one remote found, and origin is not one of them - exiting');
+            console.error("More than one remote found, and 'origin' is not one of them - exiting");
             exit(1);
         }
         remoteName = 'origin';
@@ -47,10 +47,11 @@ const quickGitPr = () => {
 }
 
 const getPRUrl = (remoteUrl, sourceBranch) => {
-    if (remoteUrl.includes('github.com')) {
+
+    if (remoteUrl.includes('github.com') || remoteUrl.includes('ghe.com')) { // Github, Github Enterprise
         // take the .git away from the remoteUrl
-        return `${remoteUrl.slice(0, -4)}/compare/${sourceBranch}?expand=1`
-    } else if (remoteUrl.indexOf('visualstudio.com') > -1) {
+        return `${remoteUrl.slice(0, -4)}/compare/${sourceBranch}?expand=1`;
+    } else if (remoteUrl.indexOf('visualstudio.com') > -1) { // Azure DevOps
         const targetBranch = execSync(`git rev-parse --abbrev-ref ${remoteName}/HEAD`).toString().split("/")[1].trim();
         console.log(`Using target branch '${targetBranch}'`);
         return `${remoteUrl}/pullrequestcreate?sourceRef=${sourceBranch}&targetRef=${targetBranch}`;
