@@ -1,6 +1,6 @@
 {
   "name": "quickgitpr",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Quickly open a pull request",
   "bin": "index.js",
   "repository": {

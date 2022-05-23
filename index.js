@@ -43,7 +43,7 @@ const quickGitPr = () => {
     execSync(`git push --set-upstream ${remoteName} ${branchName}`);
 
     const remoteUrl = execSync(`git remote get-url ${remoteName}`).toString().trim();
-    execSync(`start ${getPRUrl(remoteUrl, branchName, remoteName)}`);
+    execSync(`start "${getPRUrl(remoteUrl, branchName, remoteName)}"`);
 }
 
 const getPRUrl = (remoteUrl, sourceBranch, remoteName) => {
